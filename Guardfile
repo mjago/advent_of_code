@@ -28,16 +28,20 @@ guard :bundler do
   files.each { |file| watch(helper.real_path(file)) }
 end
 
-
-# Add files and commands to this file, like the example:
-#   watch(%r{file/path}) { `command(s)` }
-#
 guard :shell do
   require 'colorize'
 
   watch(/(.*).rb/) {|m| puts "file: #{m[0]}".colorize(mode: :bold, color: :yellow) }
   watch(/(.*).rb/) {|m| `ruby #{m[0]}` }
 
-  watch(/(.*).c/) {|m| puts "file: #{m[0]}".colorize(mode: :bold, color: :yellow) }
+  watch(%r{\.c\z}) {|m| puts "file: #{m[0]}".colorize(mode: :bold, color: :yellow) }
   watch(/(.*).c/) {|m| `cc #{m[0]} -o out && ./out` }
+
+  watch("2025/zig/day_1/day_1.zig") do |m|
+    puts "file: #{m[0]}".colorize(mode: :bold, color: :yellow)
+  end
+
+  watch("2025/zig/day_1/day_1.zig") do |m|
+    `../zig/zig-x86_64-linux-0.14.1/zig build-exe #{File.expand_path(m[0])} && ./day_1`
+  end
 end
