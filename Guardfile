@@ -18,6 +18,7 @@
 guard :bundler do
   require 'guard/bundler'
   require 'guard/bundler/verify'
+
   helper = Guard::Bundler::Verify.new
 
   files = ['Gemfile']
@@ -33,6 +34,10 @@ end
 #
 guard :shell do
   require 'colorize'
+
   watch(/(.*).rb/) {|m| puts "file: #{m[0]}".colorize(mode: :bold, color: :yellow) }
   watch(/(.*).rb/) {|m| `ruby #{m[0]}` }
+
+  watch(/(.*).c/) {|m| puts "file: #{m[0]}".colorize(mode: :bold, color: :yellow) }
+  watch(/(.*).c/) {|m| `cc #{m[0]} -o out && ./out` }
 end

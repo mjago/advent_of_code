@@ -4223,3 +4223,4 @@ moves.each do |move|
 end
 
 puts "count = #{@count}".colorize(mode: :bold, color: :white)
+
